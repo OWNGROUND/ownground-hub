@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#143d2c">
+    <link rel="stylesheet" href="src/styles/tokens.css">
+    <link rel="stylesheet" href="src/styles/global.css">
+    <script defer src="src/data/products.js"></script>
+    <script defer src="src/i18n/ko.js"></script>
+    <script defer src="src/i18n/en.js"></script>
+    <script defer src="src/i18n/index.js"></script>
+    <script defer src="src/app.js"></script>
+    <title>OWNGROUND</title>
+  </head>
+  <body>
+    <a class="skip-link" href="#main" data-i18n="accessibility.skipToContent"></a>
+    <header class="site-header">
+      <a class="wordmark" href="#main" aria-label="OWNGROUND">OWNGROUND</a>
+      <nav class="site-nav" data-i18n-aria-label="accessibility.mainNavigation">
+        <a href="#products" data-i18n="nav.products"></a>
+        <a href="#philosophy" data-i18n="nav.about"></a>
+        <a href="#contact" data-i18n="nav.contact"></a>
+      </nav>
+      <div class="language-switcher" data-i18n-aria-label="accessibility.languageSelector">
+        <button type="button" data-language="ko">KO</button>
+        <span aria-hidden="true">/</span>
+        <button type="button" data-language="en">EN</button>
+      </div>
+    </header>
+
+    <main id="main">
+      <section class="hero" aria-labelledby="hero-title">
+        <p class="eyebrow">OWNGROUND</p>
+        <h1 id="hero-title" data-i18n="hero.title"></h1>
+        <p class="hero-copy" data-i18n="hero.description"></p>
+      </section>
+
+      <section class="section" id="products" aria-labelledby="products-title">
+        <p class="section-label" data-i18n="products.label"></p>
+        <h2 id="products-title" data-i18n="products.title"></h2>
+        <div class="product-grid" id="product-grid"></div>
+      </section>
+
+      <section class="philosophy" id="philosophy" aria-labelledby="philosophy-title">
+        <p class="section-label" data-i18n="philosophy.label"></p>
+        <h2 id="philosophy-title" data-i18n="philosophy.title"></h2>
+        <p data-i18n="philosophy.body"></p>
+      </section>
+    </main>
+
+    <footer id="contact">
+      <a class="wordmark" href="#main" aria-label="OWNGROUND">OWNGROUND</a>
+      <p data-i18n="footer.contact"></p>
+      <p data-i18n="footer.copyright"></p>
+    </footer>
+  </body>
+</html>
+

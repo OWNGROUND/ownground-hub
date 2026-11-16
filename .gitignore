@@ -1,0 +1,5 @@
+dist/
+.chrome-*/
+evidence/
+outputs/
+
