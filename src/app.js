@@ -12,7 +12,7 @@ function renderProducts(messages) {
         <h3>${product.name}</h3>
         ${product.flagship ? `<span class="badge">${translate(messages, "badges.flagship")}</span>` : ""}
       </div>
-      <p class="product-tagline">${product.tagline}</p>
+      <p class="product-tagline">${translate(messages, `products.taglines.${product.id}`)}</p>
       <p class="product-description">${translate(messages, `products.descriptions.${product.id}`)}</p>
       <div class="product-actions">
         ${product.links.map((link) => `<a href="${link.url}" rel="noopener">${translate(messages, link.label)}<span aria-hidden="true">↗</span></a>`).join("")}
@@ -31,19 +31,16 @@ function setLanguage(language) {
   document.querySelectorAll("[data-i18n-aria-label]").forEach((element) => {
     element.setAttribute("aria-label", translate(messages, element.dataset.i18nAriaLabel));
   });
-  document.querySelectorAll("[data-language]").forEach((button) => {
-    const active = button.dataset.language === language;
-    button.classList.toggle("is-active", active);
-    button.setAttribute("aria-pressed", String(active));
-  });
+  const languageSelect = document.querySelector("[data-language-select]");
+  if (languageSelect) languageSelect.value = language;
   renderProducts(messages);
   try {
     localStorage.setItem("ownground-language", language);
   } catch {}
 }
 
-document.querySelectorAll("[data-language]").forEach((button) => {
-  button.addEventListener("click", () => setLanguage(button.dataset.language));
+document.querySelector("[data-language-select]")?.addEventListener("change", (event) => {
+  setLanguage(event.currentTarget.value);
 });
 
 setLanguage(getInitialLanguage());

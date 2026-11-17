@@ -9,6 +9,11 @@
     <script defer src="src/data/products.js"></script>
     <script defer src="src/i18n/ko.js"></script>
     <script defer src="src/i18n/en.js"></script>
+    <script defer src="src/i18n/ja.js"></script>
+    <script defer src="src/i18n/es.js"></script>
+    <script defer src="src/i18n/vi.js"></script>
+    <script defer src="src/i18n/id.js"></script>
+    <script defer src="src/i18n/th.js"></script>
     <script defer src="src/i18n/index.js"></script>
     <script defer src="src/app.js"></script>
     <title>OWNGROUND</title>
@@ -22,10 +27,16 @@
         <a href="#philosophy" data-i18n="nav.about"></a>
         <a href="#contact" data-i18n="nav.contact"></a>
       </nav>
-      <div class="language-switcher" data-i18n-aria-label="accessibility.languageSelector">
-        <button type="button" data-language="ko">KO</button>
-        <span aria-hidden="true">/</span>
-        <button type="button" data-language="en">EN</button>
+      <div class="language-switcher">
+        <select id="language-select" data-language-select data-i18n-aria-label="accessibility.languageSelector" aria-label="언어 선택">
+          <option value="ko" lang="ko">KO · 한국어</option>
+          <option value="en" lang="en">EN · English</option>
+          <option value="ja" lang="ja">JA · 日本語</option>
+          <option value="es" lang="es">ES · Español</option>
+          <option value="vi" lang="vi">VI · Tiếng Việt</option>
+          <option value="id" lang="id">ID · Indonesia</option>
+          <option value="th" lang="th">TH · ไทย</option>
+        </select>
       </div>
     </header>
 

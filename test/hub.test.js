@@ -8,10 +8,46 @@ const flattenKeys = (value, prefix = "") => Object.entries(value).flatMap(([key,
   return child && typeof child === "object" ? flattenKeys(child, path) : path;
 });
 
-test("KO and EN language packs have matching keys", async () => {
-  await Promise.all([import("../src/i18n/ko.js"), import("../src/i18n/en.js")]);
-  const { ko, en } = globalThis.OWNGROUND_MESSAGES;
-  assert.deepEqual(flattenKeys(ko).sort(), flattenKeys(en).sort());
+const languages = ["ko", "en", "ja", "es", "vi", "id", "th"];
+
+test("all seven complete language packs have identical nonempty keys", async () => {
+  await Promise.all(languages.map((code) => import(`../src/i18n/${code}.js`)));
+  const messages = globalThis.OWNGROUND_MESSAGES;
+  const keys = flattenKeys(messages.ko).sort();
+  for (const code of languages) {
+    const pack = messages[code];
+    assert.deepEqual(flattenKeys(pack).sort(), keys, `Missing or extra translation keys in ${code}`);
+    for (const key of keys) {
+      const value = key.split(".").reduce((object, part) => object[part], pack);
+      assert.equal(typeof value, "string", `${code} ${key}`);
+      assert.ok(value.trim(), `Empty translation: ${code} ${key}`);
+    }
+  }
+});
+
+test("language selector supports seven languages without crowding the mobile header", async () => {
+  const [html, app, css] = await Promise.all([
+    readFile("index.html", "utf8"),
+    readFile("src/app.js", "utf8"),
+    readFile("src/styles/global.css", "utf8")
+  ]);
+  const codes = [...html.matchAll(/<option value="([a-z]{2})"/g)].map((match) => match[1]);
+  assert.deepEqual(codes, languages);
+  assert.match(html, /data-language-select/);
+  assert.match(app, /addEventListener\("change"/);
+  assert.match(css, /min-height:\s*2\.75rem/);
+});
+
+test("all supported language packs can be loaded by the existing i18n runtime", async () => {
+  await import("../src/i18n/index.js");
+  const { supportedLanguages, loadLanguage, translate } = globalThis.OWNGROUND_I18N;
+  assert.deepEqual(supportedLanguages, languages);
+  for (const code of languages) {
+    const pack = loadLanguage(code);
+    assert.notEqual(translate(pack, "hero.title"), "hero.title");
+    assert.notEqual(translate(pack, "badges.flagship"), "badges.flagship");
+    assert.notEqual(translate(pack, "philosophy.body"), "philosophy.body");
+  }
 });
 
 test("canonical Korean copy is unchanged", async () => {
