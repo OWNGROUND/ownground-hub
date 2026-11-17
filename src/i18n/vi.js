@@ -20,6 +20,11 @@ globalThis.OWNGROUND_MESSAGES.vi = {
   "products": {
     "label": "SẢN PHẨM CỦA CHÚNG TÔI",
     "title": "Sản phẩm và dịch vụ",
+    "taglines": {
+      "mop": "Nền tảng vận hành sản xuất",
+      "roundtable": "Góc nhìn đa chiều",
+      "fruitground": "Thông tin thời tiết vùng trồng trái cây"
+    },
     "descriptions": {
       "mop": "Chúng tôi kết nối dữ liệu và các hệ thống rời rạc để đội ngũ tại xưởng chủ động đưa ra quyết định.",
       "roundtable": "Chúng tôi xem xét những thách thức khi bắt đầu điều mới từ nhiều góc nhìn và giúp cụ thể hóa hướng triển khai.",
