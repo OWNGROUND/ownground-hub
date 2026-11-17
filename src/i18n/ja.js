@@ -20,6 +20,11 @@ globalThis.OWNGROUND_MESSAGES.ja = {
   "products": {
     "label": "私たちの製品",
     "title": "製品とサービス",
+    "taglines": {
+      "mop": "製造オペレーションプラットフォーム",
+      "roundtable": "多角的な視点",
+      "fruitground": "果樹産地の気象インテリジェンス"
+    },
     "descriptions": {
       "mop": "製造現場が主体的に判断できるよう、分散したデータとシステムをつなぎます。",
       "roundtable": "新たな挑戦で直面する課題を多角的に検討し、実行への道筋を具体化します。",
