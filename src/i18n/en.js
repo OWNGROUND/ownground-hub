@@ -14,8 +14,8 @@ globalThis.OWNGROUND_MESSAGES.en = {
     contact: "Contact"
   },
   hero: {
-    title: "Straight to the product you need.",
-    description: "Discover and access OWNGROUND products and services in one place."
+    title: "We lower barriers and connect possibilities.",
+    description: "We understand the core of each problem and connect people, information, and technology to help people make better decisions and take action."
   },
   products: {
     label: "OUR PRODUCTS",

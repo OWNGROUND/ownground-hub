@@ -14,8 +14,8 @@ globalThis.OWNGROUND_MESSAGES.ko = {
     contact: "문의"
   },
   hero: {
-    title: "필요한 제품으로, 바로.",
-    description: "OWNGROUND의 제품과 서비스를 한곳에서 살펴보고 이용할 수 있습니다."
+    title: "장벽을 낮추고, 가능성을 연결합니다.",
+    description: "우리는 문제의 본질을 이해하고, 사람과 정보, 기술을 연결해 더 나은 판단과 실행을 돕습니다."
   },
   products: {
     label: "OUR PRODUCTS",
