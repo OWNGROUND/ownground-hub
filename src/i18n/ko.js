@@ -20,6 +20,11 @@ globalThis.OWNGROUND_MESSAGES.ko = {
   products: {
     label: "OUR PRODUCTS",
     title: "제품과 서비스",
+    taglines: {
+      "mop": "Manufacturing Operations Platform",
+      "roundtable": "Structured Perspectives",
+      "fruitground": "Fruit Weather Intelligence"
+    },
     descriptions: {
       mop: "제조 현장이 주도적으로 판단할 수 있도록, 흩어진 데이터와 시스템을 연결합니다.",
       roundtable: "새로운 도전에서 마주한 문제를 다양한 관점에서 검토하고, 실행 방향을 구체화합니다.",
