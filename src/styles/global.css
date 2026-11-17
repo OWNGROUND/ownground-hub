@@ -10,7 +10,7 @@ body {
   margin: 0;
   color: var(--ink);
   background: var(--paper);
-  font-family: Inter, Pretendard, "Noto Sans KR", system-ui, sans-serif;
+  font-family: Inter, Pretendard, "Noto Sans KR", "Noto Sans JP", "Noto Sans Thai", system-ui, sans-serif;
   line-height: 1.6;
 }
 
@@ -78,17 +78,17 @@ footer {
   color: var(--muted);
 }
 
-.language-switcher button {
-  padding: 0.2rem;
-  border: 0;
-  color: inherit;
-  background: transparent;
-  cursor: pointer;
-}
-
-.language-switcher button.is-active {
+.language-switcher select {
+  width: 10rem;
+  max-width: 100%;
+  min-height: 2.75rem;
+  padding: 0.45rem 0.5rem;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
   color: var(--green);
-  font-weight: 800;
+  background: var(--white);
+  font-weight: 700;
+  cursor: pointer;
 }
 
 :focus-visible {
@@ -274,13 +274,16 @@ footer p {
     gap: 1rem;
   }
 
-  .site-nav a,
-  .language-switcher button {
+  .site-nav a {
     display: inline-flex;
     min-width: 2.75rem;
     min-height: 2.75rem;
     align-items: center;
     justify-content: center;
+  }
+
+  .language-switcher select {
+    width: clamp(7.5rem, 39vw, 9rem);
   }
 
   .hero {
