@@ -20,6 +20,11 @@ globalThis.OWNGROUND_MESSAGES.id = {
   "products": {
     "label": "PRODUK KAMI",
     "title": "Produk dan layanan",
+    "taglines": {
+      "mop": "Platform Operasi Manufaktur",
+      "roundtable": "Perspektif Terstruktur",
+      "fruitground": "Wawasan Cuaca Wilayah Buah"
+    },
     "descriptions": {
       "mop": "Kami menghubungkan data dan sistem yang terpisah agar tim di lapangan produksi dapat mengambil keputusan secara mandiri.",
       "roundtable": "Kami meninjau tantangan saat memulai hal baru dari berbagai sudut pandang dan memperjelas langkah pelaksanaannya.",
