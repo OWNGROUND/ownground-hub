@@ -20,6 +20,11 @@ globalThis.OWNGROUND_MESSAGES.en = {
   products: {
     label: "OUR PRODUCTS",
     title: "Products and services",
+    taglines: {
+      "mop": "Manufacturing Operations Platform",
+      "roundtable": "Structured Perspectives",
+      "fruitground": "Fruit Weather Intelligence"
+    },
     descriptions: {
       mop: "We connect fragmented data and systems so manufacturing teams can make informed decisions on their own terms.",
       roundtable: "We examine the challenges of new ventures from multiple perspectives and turn them into concrete directions for action.",
