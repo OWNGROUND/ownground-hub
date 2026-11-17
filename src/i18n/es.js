@@ -20,6 +20,11 @@ globalThis.OWNGROUND_MESSAGES.es = {
   "products": {
     "label": "NUESTROS PRODUCTOS",
     "title": "Productos y servicios",
+    "taglines": {
+      "mop": "Plataforma de operaciones de fabricación",
+      "roundtable": "Perspectivas estructuradas",
+      "fruitground": "Inteligencia meteorológica para zonas frutícolas"
+    },
     "descriptions": {
       "mop": "Conectamos datos y sistemas dispersos para que los equipos de producción puedan tomar decisiones con autonomía.",
       "roundtable": "Analizamos los retos de nuevas iniciativas desde distintas perspectivas y concretamos los pasos para llevarlas a cabo.",
