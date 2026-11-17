@@ -31,19 +31,16 @@ function setLanguage(language) {
   document.querySelectorAll("[data-i18n-aria-label]").forEach((element) => {
     element.setAttribute("aria-label", translate(messages, element.dataset.i18nAriaLabel));
   });
-  document.querySelectorAll("[data-language]").forEach((button) => {
-    const active = button.dataset.language === language;
-    button.classList.toggle("is-active", active);
-    button.setAttribute("aria-pressed", String(active));
-  });
+  const languageSelect = document.querySelector("[data-language-select]");
+  if (languageSelect) languageSelect.value = language;
   renderProducts(messages);
   try {
     localStorage.setItem("ownground-language", language);
   } catch {}
 }
 
-document.querySelectorAll("[data-language]").forEach((button) => {
-  button.addEventListener("click", () => setLanguage(button.dataset.language));
+document.querySelector("[data-language-select]")?.addEventListener("change", (event) => {
+  setLanguage(event.currentTarget.value);
 });
 
 setLanguage(getInitialLanguage());
