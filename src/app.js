@@ -12,7 +12,7 @@ function renderProducts(messages) {
         <h3>${product.name}</h3>
         ${product.flagship ? `<span class="badge">${translate(messages, "badges.flagship")}</span>` : ""}
       </div>
-      <p class="product-tagline">${product.tagline}</p>
+      <p class="product-tagline">${translate(messages, `products.taglines.${product.id}`)}</p>
       <p class="product-description">${translate(messages, `products.descriptions.${product.id}`)}</p>
       <div class="product-actions">
         ${product.links.map((link) => `<a href="${link.url}" rel="noopener">${translate(messages, link.label)}<span aria-hidden="true">↗</span></a>`).join("")}
