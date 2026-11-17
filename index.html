@@ -27,16 +27,21 @@
         <a href="#philosophy" data-i18n="nav.about"></a>
         <a href="#contact" data-i18n="nav.contact"></a>
       </nav>
-      <div class="language-switcher">
-        <select id="language-select" data-language-select data-i18n-aria-label="accessibility.languageSelector" aria-label="언어 선택">
-          <option value="ko" lang="ko">KO · 한국어</option>
-          <option value="en" lang="en">EN · English</option>
-          <option value="ja" lang="ja">JA · 日本語</option>
-          <option value="es" lang="es">ES · Español</option>
-          <option value="vi" lang="vi">VI · Tiếng Việt</option>
-          <option value="id" lang="id">ID · Indonesia</option>
-          <option value="th" lang="th">TH · ไทย</option>
-        </select>
+      <div class="language-switcher" data-language-control>
+        <button class="locale-switch" type="button" data-language-toggle
+          aria-haspopup="true" aria-expanded="false" aria-controls="language-menu" aria-label="언어 선택">
+          <span data-language-current>KO</span>
+        </button>
+        <div class="locale-menu" id="language-menu" data-language-menu role="group"
+          data-i18n-aria-label="accessibility.languageSelector" aria-label="언어 선택" hidden>
+          <button type="button" data-locale="ko" lang="ko">KO</button>
+          <button type="button" data-locale="en" lang="en">EN</button>
+          <button type="button" data-locale="ja" lang="ja">JA</button>
+          <button type="button" data-locale="es" lang="es">ES</button>
+          <button type="button" data-locale="vi" lang="vi">VI</button>
+          <button type="button" data-locale="id" lang="id">ID</button>
+          <button type="button" data-locale="th" lang="th">TH</button>
+        </div>
       </div>
     </header>
 
