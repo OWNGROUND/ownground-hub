@@ -203,3 +203,12 @@ test("untranslated About always labels Korean content instead of inventing six l
   assert.match(html,/data-about-translation-notice hidden lang="en"/);
   assert.match(app,/translationNotice\.hidden=language==="ko"/);
 });
+
+test("product title link exists only for the verified MOP website and tooltip is not clipped",async()=>{
+  const [app,css]=await Promise.all([readFile("src/app.js","utf8"),readFile("src/styles/global.css","utf8")]);
+  assert.match(app,/const link=product\.links\[0\]/);
+  assert.match(app,/class="titlelink"/);
+  assert.match(css,/\.tooltip\{position:absolute/);
+  assert.match(css,/overflow:visible/);
+  assert.match(css,/\.card:has\(\.titlelink:hover\)/);
+});
