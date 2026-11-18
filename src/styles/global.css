@@ -344,6 +344,20 @@ footer p {
   margin: 0;
 }
 
+.footer-contact {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.footer-contact a {
+  display: inline-flex;
+  min-height: 2.75rem;
+  align-items: center;
+  text-underline-offset: 0.2rem;
+}
+
 @media (max-width: 48rem) {
   .site-header {
     grid-template-columns: 1fr auto;
