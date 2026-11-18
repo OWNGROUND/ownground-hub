@@ -32,7 +32,9 @@ globalThis.OWNGROUND_MESSAGES.vi = {
     }
   },
   "badges": {
-    "flagship": "Chủ lực"
+    "flagship": "Chủ lực",
+    "beta": "Beta",
+    "comingSoon": "Sắp ra mắt"
   },
   "actions": {
     "website": "Truy cập trang web"

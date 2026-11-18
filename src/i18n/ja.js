@@ -32,7 +32,9 @@ globalThis.OWNGROUND_MESSAGES.ja = {
     }
   },
   "badges": {
-    "flagship": "主力製品"
+    "flagship": "主力製品",
+    "beta": "Beta",
+    "comingSoon": "準備中"
   },
   "actions": {
     "website": "公式サイトを見る"

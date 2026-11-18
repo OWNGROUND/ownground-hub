@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="src/styles/tokens.css">
     <link rel="stylesheet" href="src/styles/global.css">
     <script defer src="src/data/products.js"></script>
+    <script defer src="src/data/korea-beta.js"></script>
     <script defer src="src/i18n/ko.js"></script>
     <script defer src="src/i18n/en.js"></script>
     <script defer src="src/i18n/ja.js"></script>
@@ -29,18 +30,19 @@
       </nav>
       <div class="language-switcher" data-language-control>
         <button class="locale-switch" type="button" data-language-toggle
-          aria-haspopup="true" aria-expanded="false" aria-controls="language-menu" aria-label="언어 선택">
+          aria-haspopup="true" aria-expanded="false" aria-controls="language-menu"
+          data-i18n-aria-label="accessibility.languageSelector" aria-label="언어 선택">
           <span data-language-current>KO</span>
         </button>
         <div class="locale-menu" id="language-menu" data-language-menu role="group"
           data-i18n-aria-label="accessibility.languageSelector" aria-label="언어 선택" hidden>
-          <button type="button" data-locale="ko" lang="ko">KO</button>
-          <button type="button" data-locale="en" lang="en">EN</button>
-          <button type="button" data-locale="ja" lang="ja">JA</button>
-          <button type="button" data-locale="es" lang="es">ES</button>
-          <button type="button" data-locale="vi" lang="vi">VI</button>
-          <button type="button" data-locale="id" lang="id">ID</button>
-          <button type="button" data-locale="th" lang="th">TH</button>
+          <button type="button" data-language-option="ko" lang="ko">KO</button>
+          <button type="button" data-language-option="en" lang="en">EN</button>
+          <button type="button" data-language-option="ja" lang="ja">JA</button>
+          <button type="button" data-language-option="es" lang="es">ES</button>
+          <button type="button" data-language-option="vi" lang="vi">VI</button>
+          <button type="button" data-language-option="id" lang="id">ID</button>
+          <button type="button" data-language-option="th" lang="th">TH</button>
         </div>
       </div>
     </header>
