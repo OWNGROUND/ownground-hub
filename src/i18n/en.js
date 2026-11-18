@@ -32,7 +32,9 @@ globalThis.OWNGROUND_MESSAGES.en = {
     }
   },
   badges: {
-    flagship: "Flagship"
+    flagship: "Flagship",
+    beta: "Beta",
+    comingSoon: "Coming Soon"
   },
   actions: {
     website: "Visit website"

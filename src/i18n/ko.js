@@ -32,7 +32,9 @@ globalThis.OWNGROUND_MESSAGES.ko = {
     }
   },
   badges: {
-    flagship: "대표"
+    flagship: "대표",
+    beta: "Beta",
+    comingSoon: "준비 중"
   },
   actions: {
     website: "홈페이지 보기"

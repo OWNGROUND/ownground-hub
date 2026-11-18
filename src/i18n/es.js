@@ -32,7 +32,9 @@ globalThis.OWNGROUND_MESSAGES.es = {
     }
   },
   "badges": {
-    "flagship": "Principal"
+    "flagship": "Principal",
+    "beta": "Beta",
+    "comingSoon": "Próximamente"
   },
   "actions": {
     "website": "Visitar sitio web"

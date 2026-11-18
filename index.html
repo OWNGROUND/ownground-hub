@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="src/styles/tokens.css">
     <link rel="stylesheet" href="src/styles/global.css">
     <script defer src="src/data/products.js"></script>
+    <script defer src="src/data/korea-beta.js"></script>
     <script defer src="src/i18n/ko.js"></script>
     <script defer src="src/i18n/en.js"></script>
     <script defer src="src/i18n/ja.js"></script>
@@ -27,16 +28,22 @@
         <a href="#philosophy" data-i18n="nav.about"></a>
         <a href="#contact" data-i18n="nav.contact"></a>
       </nav>
-      <div class="language-switcher">
-        <select id="language-select" data-language-select data-i18n-aria-label="accessibility.languageSelector" aria-label="언어 선택">
-          <option value="ko" lang="ko">KO · 한국어</option>
-          <option value="en" lang="en">EN · English</option>
-          <option value="ja" lang="ja">JA · 日本語</option>
-          <option value="es" lang="es">ES · Español</option>
-          <option value="vi" lang="vi">VI · Tiếng Việt</option>
-          <option value="id" lang="id">ID · Indonesia</option>
-          <option value="th" lang="th">TH · ไทย</option>
-        </select>
+      <div class="language-switcher" data-language-control>
+        <button class="locale-switch" type="button" data-language-toggle
+          aria-haspopup="true" aria-expanded="false" aria-controls="language-menu"
+          data-i18n-aria-label="accessibility.languageSelector" aria-label="언어 선택">
+          <span data-language-current>KO</span>
+        </button>
+        <div class="locale-menu" id="language-menu" data-language-menu role="group"
+          data-i18n-aria-label="accessibility.languageSelector" aria-label="언어 선택" hidden>
+          <button type="button" data-language-option="ko" lang="ko">KO</button>
+          <button type="button" data-language-option="en" lang="en">EN</button>
+          <button type="button" data-language-option="ja" lang="ja">JA</button>
+          <button type="button" data-language-option="es" lang="es">ES</button>
+          <button type="button" data-language-option="vi" lang="vi">VI</button>
+          <button type="button" data-language-option="id" lang="id">ID</button>
+          <button type="button" data-language-option="th" lang="th">TH</button>
+        </div>
       </div>
     </header>
 
@@ -62,7 +69,7 @@
 
     <footer id="contact">
       <a class="wordmark" href="#main" aria-label="OWNGROUND">OWNGROUND</a>
-      <p data-i18n="footer.contact"></p>
+      <p class="footer-contact"><span data-i18n="footer.contact"></span><a href="mailto:contact@ownground.kr">contact@ownground.kr</a></p>
       <p data-i18n="footer.copyright"></p>
     </footer>
   </body>

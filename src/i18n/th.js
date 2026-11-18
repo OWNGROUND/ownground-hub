@@ -32,7 +32,9 @@ globalThis.OWNGROUND_MESSAGES.th = {
     }
   },
   "badges": {
-    "flagship": "ผลิตภัณฑ์หลัก"
+    "flagship": "ผลิตภัณฑ์หลัก",
+    "beta": "Beta",
+    "comingSoon": "เร็ว ๆ นี้"
   },
   "actions": {
     "website": "เยี่ยมชมเว็บไซต์"

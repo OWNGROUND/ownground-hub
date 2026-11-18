@@ -32,7 +32,9 @@ globalThis.OWNGROUND_MESSAGES.id = {
     }
   },
   "badges": {
-    "flagship": "Unggulan"
+    "flagship": "Unggulan",
+    "beta": "Beta",
+    "comingSoon": "Segera hadir"
   },
   "actions": {
     "website": "Kunjungi situs"

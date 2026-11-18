@@ -25,17 +25,25 @@ test("all seven complete language packs have identical nonempty keys", async () 
   }
 });
 
-test("language selector supports seven languages without crowding the mobile header", async () => {
+test("MOP-style language menu exposes seven accessible language options", async () => {
   const [html, app, css] = await Promise.all([
     readFile("index.html", "utf8"),
     readFile("src/app.js", "utf8"),
     readFile("src/styles/global.css", "utf8")
   ]);
-  const codes = [...html.matchAll(/<option value="([a-z]{2})"/g)].map((match) => match[1]);
+  const codes = [...html.matchAll(/data-language-option="([a-z]{2})"/g)].map((match) => match[1]);
   assert.deepEqual(codes, languages);
-  assert.match(html, /data-language-select/);
-  assert.match(app, /addEventListener\("change"/);
+  assert.match(html, /data-language-toggle[\s\S]*aria-expanded="false"/);
+  assert.match(html, /data-language-menu[\s\S]*role="group"/);
+  assert.match(app, /setAttribute\("aria-expanded"/);
+  assert.match(app, /setAttribute\("aria-pressed"/);
+  assert.match(app, /event\.key === "Escape"/);
+  assert.match(app, /languageControl\.contains\(event\.target\)/);
+  assert.match(app, /localStorage\.setItem\("ownground-language"/);
+  assert.match(css, /grid-template-columns:\s*repeat\(3/);
   assert.match(css, /min-height:\s*2\.75rem/);
+  assert.match(css, /width:\s*min\(13\.5rem,\s*calc\(100vw - 3rem\)\)/);
+  assert.match(css, /prefers-reduced-motion/);
 });
 
 test("all supported language packs can be loaded by the existing i18n runtime", async () => {
@@ -46,6 +54,8 @@ test("all supported language packs can be loaded by the existing i18n runtime", 
     const pack = loadLanguage(code);
     assert.notEqual(translate(pack, "hero.title"), "hero.title");
     assert.notEqual(translate(pack, "badges.flagship"), "badges.flagship");
+    assert.equal(translate(pack, "badges.beta"), "Beta");
+    assert.notEqual(translate(pack, "badges.comingSoon"), "badges.comingSoon");
     assert.notEqual(translate(pack, "philosophy.body"), "philosophy.body");
   }
 });
@@ -74,8 +84,33 @@ test("only the verified MOP introduction URL is active", async () => {
   await import("../src/data/products.js");
   const products = globalThis.OWNGROUND_PRODUCTS;
   assert.deepEqual(products.map(({ name }) => name), ["MOP", "RoundTable", "FRUITGROUND"]);
+  assert.deepEqual(products.map(({ status }) => status), ["flagship", "beta", "comingSoon"]);
   assert.deepEqual(products.flatMap(({ links }) => links.map(({ url }) => url)), ["https://ownground.kr"]);
-  assert.deepEqual(products.filter(({ flagship }) => flagship).map(({ id }) => id), ["mop"]);
+});
+
+test("Korea-only RoundTable beta notice is separate and has no application URL", async () => {
+  await import("../src/data/korea-beta.js");
+  const notice = globalThis.OWNGROUND_KOREA_BETA;
+  assert.deepEqual(notice, {
+    roundtable: {
+      title: "베타 테스터 모집 중 · 국내 한정",
+      body: "새로운 사업이나 프로젝트를 준비하며, 명확한 주제를 다양한 관점에서 검토하고 발전시키고 싶은 분들의 참여를 기다립니다."
+    }
+  });
+  assert.doesNotMatch(JSON.stringify(notice), /https?:\/\//);
+  const app = await readFile("src/app.js", "utf8");
+  assert.match(app, /language === "ko" \? koreaBeta\[product\.id\]/);
+});
+
+test("footer contact email is a working mailto link in every language", async () => {
+  const html = await readFile("index.html", "utf8");
+  assert.match(html, /<span data-i18n="footer\.contact"><\/span>/);
+  assert.match(html, /<a href="mailto:contact@ownground\.kr">contact@ownground\.kr<\/a>/);
+  assert.equal((html.match(/mailto:contact@ownground\.kr/g) ?? []).length, 1);
+  await Promise.all(languages.map((code) => import(`../src/i18n/${code}.js`)));
+  for (const code of languages) {
+    assert.ok(globalThis.OWNGROUND_MESSAGES[code].footer.contact.trim(), `Missing contact label: ${code}`);
+  }
 });
 
 test("preview server cannot read outside the build folder", () => {

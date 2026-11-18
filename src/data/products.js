@@ -2,19 +2,19 @@ globalThis.OWNGROUND_PRODUCTS = [
   {
     id: "mop",
     name: "MOP",
-    flagship: true,
+    status: "flagship",
     links: [{ label: "actions.website", url: "https://ownground.kr" }]
   },
   {
     id: "roundtable",
     name: "RoundTable",
-    flagship: false,
+    status: "beta",
     links: []
   },
   {
     id: "fruitground",
     name: "FRUITGROUND",
-    flagship: false,
+    status: "comingSoon",
     links: []
   }
 ];
