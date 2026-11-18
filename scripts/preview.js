@@ -4,7 +4,8 @@ import { extname, resolve, sep } from "node:path";
 import { fileURLToPath } from "node:url";
 
 const root = resolve("dist");
-const contentTypes = {
+export const contentTypes = {
+  ".svg": "image/svg+xml",
   ".css": "text/css",
   ".html": "text/html; charset=utf-8",
   ".js": "text/javascript",

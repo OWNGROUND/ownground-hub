@@ -1,7 +1,7 @@
 import assert from "node:assert/strict";
 import { readFile } from "node:fs/promises";
 import test from "node:test";
-import { resolveRequest } from "../scripts/preview.js";
+import { resolveRequest, contentTypes } from "../scripts/preview.js";
 
 const flattenKeys = (value, prefix = "") => Object.entries(value).flatMap(([key, child]) => {
   const path = prefix ? `${prefix}.${key}` : key;
@@ -139,18 +139,18 @@ test("approved v0.2 landing keeps the 3-column compact cards, approved arrow mot
   assert.doesNotMatch(app,/베타테스터 모집 중 · 국내 한정/);
 });
 
-test("official OWNGROUND SVG assets exactly match verified Git blob SHA", async () => {
-  const {createHash} = await import("node:crypto");
-  const {readFileSync} = await import("node:fs");
+test("official OWNGROUND SVG Git objects and Git-filtered working tree match approved hashes on Windows and Linux", async () => {
+  const {execFileSync} = await import("node:child_process");
   const assets = [[
     "src/assets/brand/ownground-wordmark-light.svg","e3637d8dcd85418c94ac534837ad8eaf8b301933"
   ],[
     "src/assets/brand/favicon-small.svg","6c4eb7798bd22a62f78605b6a2b31bbaa64dc861"
   ]];
   for (const [filename,expected] of assets) {
-    const raw=readFileSync(filename);
-    const actual=createHash("sha1").update("blob "+raw.length+"\0").update(raw).digest("hex");
-    assert.equal(actual,expected,filename);
+    const tracked=execFileSync("git",["rev-parse","HEAD:"+filename],{encoding:"utf8"}).trim();
+    const normalized=execFileSync("git",["hash-object","--path="+filename,filename],{encoding:"utf8"}).trim();
+    assert.equal(tracked,expected,filename+" committed Git blob identity");
+    assert.equal(normalized,expected,filename+" normalized working tree content");
   }
 });
 
@@ -258,4 +258,11 @@ test("product title link exists only for the verified MOP website and tooltip is
   assert.match(css,/\.tooltip\{position:absolute/);
   assert.match(css,/overflow:visible/);
   assert.match(css,/\.card:has\(\.titlelink:hover\)/);
+});
+
+test("G5 fixes: SVG is served with the correct MIME and Japanese About allows safe line wrapping", async () => {
+  assert.equal(contentTypes[".svg"],"image/svg+xml");
+  const css=await readFile("src/styles/global.css","utf8");
+  assert.ok(css.includes(".about-doc[lang=\"ja\"] :is(h1,h2,h3,p){word-break:normal;overflow-wrap:anywhere;line-break:strict}"));
+  assert.match(css,/\.about-doc p\{[^}]*word-break:keep-all/);
 });
