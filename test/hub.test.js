@@ -123,3 +123,83 @@ test("the page works when index.html is opened directly", async () => {
   assert.doesNotMatch(html, /type="module"/);
   assert.doesNotMatch(app, /\b(fetch|import)\s*\(/);
 });
+
+test("approved v0.2 landing keeps the 3-column compact cards, approved arrow motion and product copy", async () => {
+  const [html,css,app] = await Promise.all([readFile("index.html","utf8"),readFile("src/styles/global.css","utf8"),readFile("src/app.js","utf8")]);
+  assert.match(html,/id="product-grid"/);
+  assert.doesNotMatch(html,/class="hero"|class="philosophy"/);
+  assert.doesNotMatch(html,/>제품과 서비스</);
+  assert.match(css,/grid-template-columns:repeat\(3,minmax\(0,1fr\)\)/);
+  assert.match(css,/min-height:217px/);
+  assert.match(css,/-webkit-line-clamp:3/);
+  assert.match(css,/animation:wave 1s ease-in-out 1\.4s infinite/);
+  assert.match(css,/transition-delay:\.09s/);
+  assert.match(css,/transition-delay:\.18s/);
+  assert.match(app,/베타테스터 모집 중/);
+  assert.doesNotMatch(app,/베타테스터 모집 중 · 국내 한정/);
+});
+
+test("official OWNGROUND SVG assets exactly match verified Git blob SHA", async () => {
+  const {createHash} = await import("node:crypto");
+  const {readFileSync} = await import("node:fs");
+  const assets = [[
+    "src/assets/brand/ownground-wordmark-light.svg","e3637d8dcd85418c94ac534837ad8eaf8b301933"
+  ],[
+    "src/assets/brand/favicon-small.svg","6c4eb7798bd22a62f78605b6a2b31bbaa64dc861"
+  ]];
+  for (const [filename,expected] of assets) {
+    const raw=readFileSync(filename);
+    const actual=createHash("sha1").update("blob "+raw.length+"\0").update(raw).digest("hex");
+    assert.equal(actual,expected,filename);
+  }
+});
+
+test("About Korean copy, meaning and four sections match the Owner v0.1 source", async () => {
+  const about=await readFile("about/index.html","utf8");
+  const required=[
+    "기술보다 먼저, 문제를 이해합니다.",
+    "우리는 문제가 발생하는 현실과 그 문제를 마주한 사람을 먼저 살핍니다.",
+    "흩어진 정보와 서로 다른 관점을 연결하고, 사람이 스스로 판단하고 실행할 수 있는 기반을 만듭니다.",
+    "OWN + GROUND",
+    "OWN은 스스로 판단하고 선택하는 주도권을 뜻합니다.",
+    "GROUND는 문제가 발생하는 실제 환경이자 변화가 시작되는 기반을 의미합니다.",
+    "이 생각은 제조 현장에서 출발했지만, 하나의 산업에만 머무르지 않습니다.",
+    "우리가 문제를 해결하는 기준",
+    "실제 맥락에서 출발합니다.",
+    "단절된 것을 연결합니다.",
+    "기록과 의미를 이어갑니다.",
+    "변화의 가능성을 남깁니다.",
+    "서로 다른 문제, 같은 기준",
+    "제품 살펴보기"
+  ];
+  for (const phrase of required) assert.ok(about.includes(phrase),phrase);
+  assert.equal((about.match(/class="about-section"/g)||[]).length,4);
+  assert.match(about,/href="\.\.\/"[^>]*>제품 살펴보기/);
+  assert.doesNotMatch(about,/type="submit"/);
+});
+
+test("About is directly routable; Contact stays at the email anchor rather than nonexistent route", async () => {
+  const [home,about,build,preview]=await Promise.all([
+    readFile("index.html","utf8"),readFile("about/index.html","utf8"),
+    readFile("scripts/build.js","utf8"),readFile("scripts/preview.js","utf8")
+  ]);
+  assert.match(home,/href="about\/" data-i18n="nav.about"/);
+  assert.match(about,/href="\.\.\/" data-i18n="nav.products"/);
+  for (const html of [home,about]) {
+    assert.equal((html.match(/data-language-option="/g)||[]).length,7);
+    assert.match(html,/href="#contact" data-i18n="nav.contact"/);
+    assert.match(html,/mailto:contact@ownground\.kr/);
+    assert.doesNotMatch(html,/href="\/contact\/"/);
+  }
+  assert.match(build,/cp\("about", "dist\/about"/);
+  assert.match(preview,/about\/index\.html/);
+  assert.match(resolveRequest("/about/"),/dist[\\/]about[\\/]index\.html$/);
+  assert.match(resolveRequest("/about"),/dist[\\/]about[\\/]index\.html$/);
+});
+
+test("untranslated About always labels Korean content instead of inventing six language translations", async () => {
+  const [html,app]=await Promise.all([readFile("about/index.html","utf8"),readFile("src/app.js","utf8")]);
+  assert.match(html,/<article class="about-doc" lang="ko">/);
+  assert.match(html,/data-about-translation-notice hidden lang="en"/);
+  assert.match(app,/translationNotice\.hidden=language==="ko"/);
+});
