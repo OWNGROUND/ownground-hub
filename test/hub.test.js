@@ -102,6 +102,17 @@ test("Korea-only RoundTable beta notice is separate and has no application URL",
   assert.match(app, /language === "ko" \? koreaBeta\[product\.id\]/);
 });
 
+test("footer contact email is a working mailto link in every language", async () => {
+  const html = await readFile("index.html", "utf8");
+  assert.match(html, /<span data-i18n="footer\.contact"><\/span>/);
+  assert.match(html, /<a href="mailto:contact@ownground\.kr">contact@ownground\.kr<\/a>/);
+  assert.equal((html.match(/mailto:contact@ownground\.kr/g) ?? []).length, 1);
+  await Promise.all(languages.map((code) => import(`../src/i18n/${code}.js`)));
+  for (const code of languages) {
+    assert.ok(globalThis.OWNGROUND_MESSAGES[code].footer.contact.trim(), `Missing contact label: ${code}`);
+  }
+});
+
 test("preview server cannot read outside the build folder", () => {
   assert.equal(resolveRequest("/%2e%2e%2fpackage.json"), null);
   assert.match(resolveRequest("/src/app.js"), /dist[\\/]src[\\/]app\.js$/);
