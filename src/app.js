@@ -9,7 +9,6 @@
   const languageOptions=[...document.querySelectorAll("[data-language-option]")];
   const grid=document.querySelector("#product-grid");
   const isAbout=document.body.dataset.page==="about";
-  const translationNotice=document.querySelector("[data-about-translation-notice]");
   const arrows = `<span class="stack" aria-hidden="true">
     <svg viewBox="0 0 24 18"><path d="M5 5 L12 12 L19 5"/></svg>
     <svg viewBox="0 0 24 18"><path d="M5 5 L12 12 L19 5"/></svg>
@@ -71,7 +70,7 @@
   function setLanguage(language){
     const messages=loadLanguage(language);
     document.documentElement.lang=language;
-    document.title=isAbout?"About OWNGROUND | OWNGROUND":translate(messages,"meta.title");
+    document.title=isAbout?translate(messages,"aboutPage.meta.title"):translate(messages,"meta.title");
     document.querySelectorAll("[data-i18n]").forEach(el=>el.textContent=translate(messages,el.dataset.i18n));
     document.querySelectorAll("[data-i18n-aria-label]").forEach(el=>el.setAttribute("aria-label",translate(messages,el.dataset.i18nAriaLabel)));
     languageCurrent.textContent=language.toUpperCase();
@@ -80,7 +79,12 @@
       button.classList.toggle("is-active",active);
       button.setAttribute("aria-pressed",String(active));
     });
-    if(translationNotice)translationNotice.hidden=language==="ko";
+    if(isAbout){
+      const article=document.querySelector(".about-doc");
+      if(article)article.lang=language;
+      const description=document.querySelector('meta[name="description"]');
+      if(description)description.setAttribute("content",translate(messages,"aboutPage.meta.description"));
+    }
     renderProducts(messages,language);
     try{localStorage.setItem("ownground-language",language)}catch{}
   }

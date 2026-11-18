@@ -174,7 +174,7 @@ test("About Korean copy, meaning and four sections match the Owner v0.1 source",
   ];
   for (const phrase of required) assert.ok(about.includes(phrase),phrase);
   assert.equal((about.match(/class="about-section"/g)||[]).length,4);
-  assert.match(about,/href="\.\.\/"[^>]*>제품 살펴보기/);
+  assert.match(about,/href="\.\.\/"[^>]*><span data-i18n="aboutPage\.actions\.products">제품 살펴보기<\/span>/);
   assert.doesNotMatch(about,/type="submit"/);
 });
 
@@ -197,11 +197,58 @@ test("About is directly routable; Contact stays at the email anchor rather than 
   assert.match(resolveRequest("/about"),/dist[\\/]about[\\/]index\.html$/);
 });
 
-test("untranslated About always labels Korean content instead of inventing six language translations", async () => {
+test("About language keys and visible nodes are complete for all seven languages",async()=>{
   const [html,app]=await Promise.all([readFile("about/index.html","utf8"),readFile("src/app.js","utf8")]);
+  assert.doesNotMatch(html,/data-about-translation-notice|currently available in Korean only/);
   assert.match(html,/<article class="about-doc" lang="ko">/);
-  assert.match(html,/data-about-translation-notice hidden lang="en"/);
-  assert.match(app,/translationNotice\.hidden=language==="ko"/);
+  assert.match(html,/src="\.\.\/src\/i18n\/about\.js"/);
+  assert.match(app,/article.lang=language/);
+  assert.match(app,/aboutPage.meta.title/);
+  assert.match(app,/aboutPage.meta.description/);
+  const keys=[
+    "why.title","why.paragraph1","why.paragraph2",
+    "identity.title","identity.own","identity.ground","identity.meaning","identity.origin",
+    "principles.title","principles.contextTitle","principles.contextBody",
+    "principles.connectionTitle","principles.connectionBody",
+    "principles.continuityTitle","principles.continuityBody",
+    "principles.extensibilityTitle","principles.extensibilityBody",
+    "application.title","application.paragraph1","application.paragraph2",
+    "application.paragraph3","application.paragraph4","actions.products"
+  ];
+  for(const key of keys){
+    const token='data-i18n="aboutPage.'+key+'"';
+    assert.equal(html.split(token).length-1,1,'Missing or duplicate About node '+key);
+  }
+  await Promise.all(languages.map(code=>import(`../src/i18n/${code}.js`)));
+  await import("../src/i18n/about.js");
+  for(const code of languages){
+    const pack=globalThis.OWNGROUND_MESSAGES[code].aboutPage;
+    const fields=flattenKeys(pack).sort();
+    assert.equal(fields.length,25,code+" About field count");
+    assert.ok(pack.identity.own.includes("OWN"),code+" OWN identity");
+    assert.ok(pack.identity.ground.includes("GROUND"),code+" GROUND identity");
+    assert.ok(pack.identity.origin.length>24,code+" manufacturing origin");
+    assert.ok(pack.principles.continuityBody.length>35,code+" preserve meaning and unverified facts");
+    assert.ok(pack.application.paragraph4.length>30,code+" support human judgment");
+    for(const key of fields){
+      const value=key.split(".").reduce((object,part)=>object[part],pack);
+      assert.ok(typeof value==="string"&&value.trim(),code+" "+key);
+    }
+  }
+});
+
+test("Korean Owner-approved About copy is untouched and other languages have localized philosophy",async()=>{
+  await Promise.all(languages.map(code=>import(`../src/i18n/${code}.js`)));
+  await import("../src/i18n/about.js");
+  const packs=globalThis.OWNGROUND_MESSAGES;
+  assert.equal(packs.ko.aboutPage.why.title,"기술보다 먼저, 문제를 이해합니다.");
+  assert.equal(packs.ko.aboutPage.principles.continuityBody,"새로운 기술을 도입하더라도 기존 정보의 의미를 함부로 지우지 않습니다. 확인되지 않은 것은 사실로 단정하지 않습니다.");
+  assert.equal(packs.ko.aboutPage.application.paragraph4,"기술은 그 판단을 대신하기 위한 목적이 아니라, 사람이 더 잘 판단하고 실행하도록 돕는 수단입니다.");
+  for(const code of languages.filter(code=>code!=="ko")){
+    assert.notEqual(packs[code].aboutPage.why.title,packs.ko.aboutPage.why.title);
+    assert.notEqual(packs[code].aboutPage.application.paragraph4,packs.ko.aboutPage.application.paragraph4);
+    assert.equal(packs[code].aboutPage.identity.title,"OWN + GROUND");
+  }
 });
 
 test("product title link exists only for the verified MOP website and tooltip is not clipped",async()=>{
