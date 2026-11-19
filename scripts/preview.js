@@ -4,7 +4,8 @@ import { extname, resolve, sep } from "node:path";
 import { fileURLToPath } from "node:url";
 
 const root = resolve("dist");
-const contentTypes = {
+export const contentTypes = {
+  ".svg": "image/svg+xml",
   ".css": "text/css",
   ".html": "text/html; charset=utf-8",
   ".js": "text/javascript",
@@ -13,7 +14,7 @@ const contentTypes = {
 
 export function resolveRequest(rawUrl) {
   const pathname = decodeURIComponent(new URL(rawUrl, "http://localhost").pathname);
-  const file = resolve(root, pathname === "/" ? "index.html" : pathname.slice(1));
+  const file = resolve(root, pathname === "/" ? "index.html" : pathname === "/about" || pathname === "/about/" ? "about/index.html" : pathname.endsWith("/") ? pathname.slice(1) + "index.html" : pathname.slice(1));
   return file.startsWith(`${root}${sep}`) ? file : null;
 }
 

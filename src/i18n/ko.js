@@ -10,7 +10,7 @@ globalThis.OWNGROUND_MESSAGES.ko = {
   },
   nav: {
     products: "제품",
-    about: "소개",
+    about: "브랜드 소개",
     contact: "문의"
   },
   hero: {

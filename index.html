@@ -2,8 +2,10 @@
 <html lang="ko">
   <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="theme-color" content="#143d2c">
+    <meta name="description" content="OWNGROUND의 제품과 서비스 MOP, RoundTable, FRUITGROUND를 소개합니다.">
+    <link rel="icon" type="image/svg+xml" href="src/assets/brand/favicon-small.svg">
     <link rel="stylesheet" href="src/styles/tokens.css">
     <link rel="stylesheet" href="src/styles/global.css">
     <script defer src="src/data/products.js"></script>
@@ -17,25 +19,28 @@
     <script defer src="src/i18n/th.js"></script>
     <script defer src="src/i18n/index.js"></script>
     <script defer src="src/app.js"></script>
-    <title>OWNGROUND</title>
+    <title>OWNGROUND | 제품</title>
   </head>
-  <body>
-    <a class="skip-link" href="#main" data-i18n="accessibility.skipToContent"></a>
-    <header class="site-header">
-      <a class="wordmark" href="#main" aria-label="OWNGROUND">OWNGROUND</a>
-      <nav class="site-nav" data-i18n-aria-label="accessibility.mainNavigation">
-        <a href="#products" data-i18n="nav.products"></a>
-        <a href="#philosophy" data-i18n="nav.about"></a>
-        <a href="#contact" data-i18n="nav.contact"></a>
+  <body data-page="products">
+  <div class="shell">
+    <a class="skip-link" href="#main" data-i18n="accessibility.skipToContent">본문으로 건너뛰기</a>
+    <header class="head">
+      <a class="brand" href="./" aria-label="OWNGROUND 홈">
+        <picture>
+          <source media="(max-width: 379px)" srcset="src/assets/brand/favicon-small.svg">
+          <img alt="OWNGROUND" src="src/assets/brand/ownground-wordmark-light.svg" width="200" height="25">
+        </picture>
+      </a>
+      <nav class="nav" data-i18n-aria-label="accessibility.mainNavigation" aria-label="주요 메뉴">
+        <a href="./" data-i18n="nav.products" aria-current="page">제품</a>
+        <a href="about/" data-i18n="nav.about">브랜드 소개</a>
+        <a href="#contact" data-i18n="nav.contact">문의</a>
       </nav>
-      <div class="language-switcher" data-language-control>
-        <button class="locale-switch" type="button" data-language-toggle
-          aria-haspopup="true" aria-expanded="false" aria-controls="language-menu"
-          data-i18n-aria-label="accessibility.languageSelector" aria-label="언어 선택">
-          <span data-language-current>KO</span>
+      <div class="lang-control" data-language-control>
+        <button type="button" class="lang" data-language-toggle aria-haspopup="true" aria-expanded="false" aria-controls="language-menu" data-i18n-aria-label="accessibility.languageSelector" aria-label="언어 선택">
+          <span data-language-current>KO</span><span aria-hidden="true">+</span>
         </button>
-        <div class="locale-menu" id="language-menu" data-language-menu role="group"
-          data-i18n-aria-label="accessibility.languageSelector" aria-label="언어 선택" hidden>
+        <div class="language-menu" id="language-menu" data-language-menu role="group" data-i18n-aria-label="accessibility.languageSelector" aria-label="언어 선택" hidden>
           <button type="button" data-language-option="ko" lang="ko">KO</button>
           <button type="button" data-language-option="en" lang="en">EN</button>
           <button type="button" data-language-option="ja" lang="ja">JA</button>
@@ -46,32 +51,17 @@
         </div>
       </div>
     </header>
-
-    <main id="main">
-      <section class="hero" aria-labelledby="hero-title">
-        <p class="eyebrow">OWNGROUND</p>
-        <h1 id="hero-title" data-i18n="hero.title"></h1>
-        <p class="hero-copy" data-i18n="hero.description"></p>
-      </section>
-
-      <section class="section" id="products" aria-labelledby="products-title">
-        <p class="section-label" data-i18n="products.label"></p>
-        <h2 id="products-title" data-i18n="products.title"></h2>
-        <div class="product-grid" id="product-grid"></div>
-      </section>
-
-      <section class="philosophy" id="philosophy" aria-labelledby="philosophy-title">
-        <p class="section-label" data-i18n="philosophy.label"></p>
-        <h2 id="philosophy-title" data-i18n="philosophy.title"></h2>
-        <p data-i18n="philosophy.body"></p>
+    <main class="main" id="main">
+      <h1 class="visually-hidden">OWNGROUND 제품</h1>
+      <section class="product-section" aria-label="제품 목록">
+        <div class="cards" id="product-grid"></div>
       </section>
     </main>
 
-    <footer id="contact">
-      <a class="wordmark" href="#main" aria-label="OWNGROUND">OWNGROUND</a>
-      <p class="footer-contact"><span data-i18n="footer.contact"></span><a href="mailto:contact@ownground.kr">contact@ownground.kr</a></p>
-      <p data-i18n="footer.copyright"></p>
+    <footer class="footer" id="contact">
+      <span data-i18n="footer.copyright">© 2026 OWNGROUND. All rights reserved.</span>
+      <span class="footer-contact"><span data-i18n="footer.contact"></span><a href="mailto:contact@ownground.kr">contact@ownground.kr</a></span>
     </footer>
+  </div>
   </body>
 </html>
-
